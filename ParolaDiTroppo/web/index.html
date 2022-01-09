@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
+        <link href="stile/stile.css" rel="stylesheet" type="text/css"/>
+        <script>
+            var gradi=0;
+             var posiz=0;
+             var fr = ["CASTA", "PANDA"]; 
+             var n=Math.floor(Math.random() * 2); 
+             var indovina=(fr[n]);
+             var indiceSoluz=52;//^??
+            
+           
+             
+    function soluzione(z)
+        {// Tabella della soluzione z indica su quale cella scrivere
+            indiceSoluz++;
+            document.getElementById(indiceSoluz).innerHTML=z;
+        }
+
+ 
+    function inserisci(z)
+         { 
+            
+         //    document.getElementById('tastiera').disabled=false;
+           //  alert("tastiera false");
+            alert("valore di z "+z);
+            disTast(true);
+            document.getElementById(z).disabled = true; // disabilita tasto tastiera
+          
+        
+             var l=indovina.length;
+             var z1="";
+             if(z=="E")
+                 z1="è".toUpperCase();
+             else
+                 z1=z;
+              
+              indovina=indovina.toUpperCase();
+              var elenco = indovina.split(" ");  
+              var n_par=elenco.length;
+              alert (n_par);
+              var k=0;
+              var pt=0;
+             for(var x=0; x<n_par; x++)
+             {
+          //*************************** CONTROLLA TESTO eccolo A CAPO ******************
+            if((k<13) && (elenco[x].length+k>13))
+             k=131;
+            if((k<26) && (elenco[x].length+k>26))
+             k=26;
+            if((k<39) && (elenco[x].length+k>39))
+             k=39;
+         //************************** FINE CONTROLLO ****************************
+              
+         //*************************** SCOPRE LE CASELLE ************************   
+            for(var i=0; i<elenco[x].length; i++)
+                 {
+                  k++;
+                  if((elenco[x].charAt(i)==z)||(elenco[x].charAt(i)==z1)||(z=="SCOPRI"))
+                  {
+                     document.getElementById(k).innerHTML=elenco[x].charAt(i);
+                     document.getElementById(k).style.color  = "cadetblue";
+                     document.getElementById(k).style.backgroundColor = "cadetblue";
+                    
+                    if(document.getElementById("valletta").checked)
+                        document.getElementById(k).style.color  = "cadetblue";
+                    else
+                        document.getElementById(k).style.color  = "black";
+                  pt++;
+                 }
+              // alert("valore di parola "+ elenco[x].charAt(i)+ "valore di x "+ x);
+                 }
+                  k++;
+                  document.getElementById(k).innerHTML=" ";
+              }     
+       // alert("punteggio "+pt);
+ 
+         }
+      
+    function sblocca(z)
+            {
+               document.getElementById(z).style.color  = "black";
+            }
+            
+            
+  function tastiera(funz)
+            {
+           var alfabeto=["Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"];  
+        if(funz=="soluzione")      
+                { 
+                document.getElementById("soluzione").disbled = true; 
+                }
+        
+               
+                var t="<br/><br/><table><tr>";
+                for (i=0;i<27;i++)
+                {
+                 if( (i==10)||(i==19)||(i==26))
+                 {
+                   t=t+"</tr></table><table><tr>"; 
+                 }
+                    switch (i)
+                     {
+                         case 2:
+                         case 6:
+                         case 7:
+                         case 8:
+                         case 10:
+                         t=t+"<td><button class='vocali' id='"+alfabeto[i]+"' onclick="+funz+"('"+alfabeto[i]+"')>"+alfabeto[i]+"</button></td>";
+                         break;
+                        case 26:
+                              t=t+"<td><button class='spazio' id='space' onclick="+funz+"(' ')> </button></td>";
+                              break;
+                        default:         
+                         t=t+"<td><button id='"+alfabeto[i]+"' onclick="+funz+"('"+alfabeto[i]+"')>"+alfabeto[i]+"</button></td>";
+                         break;
+                     }
+            }
+               
+             document.getElementById('tastiera').innerHTML=t;
+            
+            }
+       
+    
+    function tabella()
+          {
+           var z=0;
+           var x="<table><tr>";
+           for (j=1; j<5;j++)
+           {
+            for (i=1;i<14;i++)
+             {
+               z++;  
+               x =x+"<td class='lettertd' id="+z+" onclick=sblocca('"+z+"')> </td>";
+             }
+             x=x+"</tr>";
+           }
+            x=x+"</table>";
+         //   document.getElementById('tab').innerHTML=x;
+          //****************   Soluzione *****************************  
+           
+            x=x+"<br/><br/><table><tr>";
+            for (i=1;i<30;i++)
+             {
+               z++;  
+               x =x+"<td class='lettertd' id="+z+"> </td>";
+             }
+             x=x+"</tr>";
+         
+            x=x+"</table>";
+            document.getElementById('tab').innerHTML=x; 
+        }
+        function disTast(y)
+        { 
+            var alfa=["Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"];  
+            alert(y);
+            for(i=0;i<26;i++)
+            {
+                //alert(i);
+                document.getElementById(alfa[i]).disabled=y;
+            }
+            
+        }
+        </script>
+    
+    </head>
+    
+    <body> 
+       
+ <h2>Soluzione</h2><br/>
+     NO<label class="switch">
+  <input id="soluzione" onclick="tastiera('soluzione')" type="checkbox" >
+  <span class="slider round"></span>
+    </label>SI
+        <div id="tab">
+            <script>
+             tabella();
+            </script>
+        </div>
+        <div id="tastiera">
+        <script>tastiera('inserisci');</script>
+        </div> 
+        <script>//inserisci();</script>
+          <button id="SCOPRI" type='button' onclick="inserisci('SCOPRI')">SCOPRI</button>
+          
+            
+    </body>
+
